@@ -1,11 +1,16 @@
 import mysql.connector
 
-cnx = mysql.connector (user = 'root', password = 'password',
-                       host = '127.0.0.1',
-                       database = 'employees')
+cnx = mysql.connector.connect(user='root', password='macbook#94',
+                              host='127.0.0.1',
+                              database='grocery_store')
 
-query = " SELECT * FROM grocery_store.products"
+cursor = cnx.cursor()
+
+query = "SELECT * FROM grocery_store.products"
 
 cursor.execute(query)
+
+for(product_id, name, uom_id, price_per_unit) in cursor:
+    print(product_id, name, uom_id, price_per_unit)
 
 cnx.close()
