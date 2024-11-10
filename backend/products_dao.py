@@ -28,6 +28,22 @@ def get_all_products(connetion):
 
     return response
 
+def inser_new_product(conncection, product):
+    cursor = conncection.cursor()
+    query = """ insert into 
+                products (products_name, uom_id, price_per_unit)
+                values (%s, %s, %s)"""
+
+    data = (product['product_name'], product['uom_id'], product['price_per_unit'])
+    cursor.execute(query, data)
+    connection.commit()
+
+    return cursor.lastrowid
+
 if __name__ == '__main__':
     connection = get_sql_connection()
-    print(get_all_products(connection))
+    print(inser_new_product(connection,{
+        'product_name': 'cabbage',
+        'uom_id': '1',
+        'price_per_unit': 90
+    } ))
