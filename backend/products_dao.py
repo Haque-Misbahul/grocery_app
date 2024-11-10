@@ -1,12 +1,10 @@
-import mysql.connector
+from sql_connection import get_sql_connection
 
 
-def get_all_products():
-    cnx = mysql.connector.connect(user='root', password='macbook#94',
-                                host='127.0.0.1',
-                                database='grocery_store')
+def get_all_products(connetion):
+    
 
-    cursor = cnx.cursor()
+    cursor = connetion.cursor()
 
     query = """
         SELECT products.product_id, products.products_name, products.uom_id, uom.uom_name, products.price_per_unit
@@ -28,8 +26,8 @@ def get_all_products():
             }
         )
 
-    cnx.close()
     return response
 
 if __name__ == '__main__':
-    print(get_all_products())
+    connection = get_sql_connection()
+    print(get_all_products(connection))
