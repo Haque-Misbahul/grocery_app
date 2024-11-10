@@ -40,10 +40,14 @@ def inser_new_product(conncection, product):
 
     return cursor.lastrowid
 
+def delete_product(conncection, product_id):
+    cursor = conncection.cursor()
+    query = "DELETE FROM products WHERE product_id = %s"
+    cursor.execute(query, (product_id,))
+    connection.commit()
+    cursor.close()
+    return f"Product with ID {product_id} deleted successfully."
+
 if __name__ == '__main__':
     connection = get_sql_connection()
-    print(inser_new_product(connection,{
-        'product_name': 'cabbage',
-        'uom_id': '1',
-        'price_per_unit': 90
-    } ))
+    print(delete_product(connection, 8))
