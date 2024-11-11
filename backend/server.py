@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 import products_dao
 from sql_connection import get_sql_connection
 import uom_dao
+import json
 
 app = Flask(__name__)
 
