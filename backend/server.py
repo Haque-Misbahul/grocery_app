@@ -4,6 +4,10 @@ from sql_connection import get_sql_connection
 import uom_dao
 import json
 
+# import backend.orders_dao as orders_dao
+
+import orders_dao
+
 app = Flask(__name__)
 
 connection = get_sql_connection()
@@ -12,13 +16,6 @@ connection = get_sql_connection()
 def get_products():
     products = products_dao.get_all_products(connection)
     response = jsonify(products)
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
-
-@app.route('/getUOM', methods=['GET'])
-def get_uom():
-    response = uom_dao.get_uoms(connection)
-    response = jsonify(response)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
@@ -31,6 +28,33 @@ def insert_product():
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+@app.route('/insertOrder', methods=['POST'])
+def insert_order():
+    request_payload = json.loads(request.form['data'])
+    order_id = orders_dao.insert_order(connection, request_payload)
+    response = jsonify({
+        'order_id': order_id
+    })
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+@app.route('/getAllOrders', methods=['GET'])
+def get_all_orders():
+    response = orders_dao.get_all_orders(connection)
+    response = jsonify(response)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
+@app.route('/getUOM', methods=['GET'])
+def get_uom():
+    response = uom_dao.get_uoms(connection)
+    response = jsonify(response)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
+
 
 @app.route('/deleteProduct', methods=['POST'])
 def delete_product():
