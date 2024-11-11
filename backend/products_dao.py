@@ -28,13 +28,13 @@ def get_all_products(connetion):
 
     return response
 
-def inser_new_product(conncection, product):
-    cursor = conncection.cursor()
-    query = """ insert into 
-                products (products_name, uom_id, price_per_unit)
-                values (%s, %s, %s)"""
-
+def insert_new_product(connection, product):
+    cursor = connection.cursor()
+    query = ("INSERT INTO products "
+             "(name, uom_id, price_per_unit)"
+             "VALUES (%s, %s, %s)")
     data = (product['product_name'], product['uom_id'], product['price_per_unit'])
+
     cursor.execute(query, data)
     connection.commit()
 
