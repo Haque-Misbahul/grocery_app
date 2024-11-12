@@ -8,7 +8,7 @@ def insert_order(connection, order):
     order_query = ("INSERT INTO orders "
              "(customer_name, total, datetime)"
              "VALUES (%s, %s, %s)")
-    order_data = (order['customer_name'], order['grand_total'], datetime.now())
+    order_data = (order['customer_name'], order['grand_total'], datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
 
     cursor.execute(order_query, order_data)
     order_id = cursor.lastrowid

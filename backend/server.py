@@ -39,16 +39,24 @@ def insert_product():
 @app.route('/insertOrder', methods=['POST'])
 def insert_order():
     try:
+        # Parse the request payload
         request_payload = json.loads(request.form['data'])
+
+        # Insert the order and handle duplicates (use the modified function)
         order_id = orders_dao.insert_order(connection, request_payload)
+
+        # Prepare the response
         response = jsonify({
             'order_id': order_id
         })
         response.headers.add('Access-Control-Allow-Origin', '*')
+
         return response
+
     except Exception as e:
         print("Error in /insertOrder:", e)
         return jsonify({'error': str(e)}), 500
+
 
 @app.route('/getAllOrders', methods=['GET'])
 def get_all_orders():
