@@ -7,7 +7,7 @@ def get_all_products(connetion):
     cursor = connetion.cursor()
 
     query = """
-        SELECT products.product_id, products.products_name, products.uom_id, uom.uom_name, products.price_per_unit
+        SELECT products.product_id, products.name, products.uom_id, uom.uom_name, products.price_per_unit
         FROM products
         INNER JOIN uom ON products.uom_id = uom.uom_id
     """
@@ -33,7 +33,7 @@ def insert_new_product(connection, product):
     query = ("INSERT INTO products "
              "(name, uom_id, price_per_unit)"
              "VALUES (%s, %s, %s)")
-    data = (product['product_name'], product['uom_id'], product['price_per_unit'])
+    data = (product['name'], product['uom_id'], product['price_per_unit'])
 
     cursor.execute(query, data)
     connection.commit()
